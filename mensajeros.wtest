@@ -1,14 +1,14 @@
 import mensajeros.*
 
-describe "Test de Mensajeros Primera Parte " {
+describe "Test de mensajeros primera parte " {
 	
 	test "Morfeo en camion con 1 acoplado pesa 90kg + 500kg "{
 	    assert.equals(590, morfeo.peso())
 }
 
-
 	test "Camion con 2 acoplados pesan 1000kg + 90kg"{
-	    assert.equals(1000, camion.peso()) 
+		camion.acoplados(2)
+	    assert.equals(1090, morfeo.peso()) 
 }
 
 	test "monopatin pesa 1kg + "{
@@ -17,6 +17,7 @@ describe "Test de Mensajeros Primera Parte " {
 }
 
 	test "Morfeo en monopatin pesa 90kg + 1kg "{
+		morfeo.transporte(monopatin)
 	    assert.equals(91, morfeo.peso() )
 }
 
@@ -34,16 +35,24 @@ describe "Test de Mensajeros Primera Parte " {
     }
 
     test "un paquete estaPago"{
+		paquete.pago(true)
 	    assert.that(paquete.estaPago())
     }
 
-    test "un paquete pago puede ser entregado por un Morfeo en camion liviano"{
+    test "un paquete pago con destino a Alsina puede ser entregado por Morfeo en camion liviano"{
+		paquete.pagar()
+		paquete.destino(puente)
 	    assert.that(paquete.puedeSerEntregadoPor(morfeo))
     }
 
-    test "un paquete pago puede no puede ser entregado por un Morfeo en camion de 3 acoplados"{
+    test "un paquete no pago no puede ser entregado por Morfeo"{
+	    assert.notThat(paquete.puedeSerEntregadoPor(morfeo))
+    }
+
+	test "un paquete pago no puede entregado por Morfeo en camion de 3 acoplados"{
+		paquete.pagar()
         camion.acoplados(3)
-	    assert.that(paquete.puedeSerEntregadoPor(morfeo))
+	    assert.notThat(paquete.puedeSerEntregadoPor(morfeo))
     }
 }
 
